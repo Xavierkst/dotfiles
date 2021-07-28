@@ -1,2 +1,2 @@
-# dotifles
-dotfiles config for vim editor
+# dotfile
+dotfiles config for the vim editor
