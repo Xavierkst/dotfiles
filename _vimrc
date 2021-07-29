@@ -20,16 +20,21 @@ set noswapfile
 
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-let mapleader=","
-" Mapping to reload configuration
-nmap <leader>so :source C:\Users\Xavie\_vimrc<CR>
+" default key leader cmds
+nnoremap <SPACE> <Nop>
+let mapleader="\<Space>"
 
+" Mapping to reload configuration
+nmap <leader>so :source C:\Users\Xavie\_gvimrc<CR>
+
+" Font and gui options set based on the system detected:
 if has("gui_running")
   if has("gui_gtk2")
     " set guifont=Inconsolata\ 12
 	set guifont=Roboto\ Mono\ Regular:h10
   elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
+	set guifont=Roboto\ Mono\ Regular:h10
+    " set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
     " set guifont=Consolas:h11:cANSI
 	set guifont=Roboto\ Mono\ Regular:h10
@@ -43,6 +48,7 @@ endif
 
 set pythonthreehome=C:\Python36-32\
 set pythonthreedll=C:\Python36-32\python36.dll
+
 map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 map <silent> <F5> :call gruvbox#bg_toggle()<CR>
 imap <silent> <F5> <ESC>:call gruvbox#bg_toggle()<CR>a
@@ -64,11 +70,20 @@ inoremap {<CR> {<CR>}<Esc>O
 inoremap {{ {
 inoremap {} {}
 
+" C++ shortcuts for compilation, current file execution
 autocmd filetype cpp nnoremap <F9> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR>
 autocmd filetype cpp nnoremap <F10> :!%:r<CR>
 autocmd filetype cpp nnoremap <C-C> :s/^\(\s*\)/\1\/\/<CR> :s/^\(\s*\)\/\/\/\//\1<CR> $
 
-set nu
+" Remaps
+map <Leader>h :wincmd h<CR>
+map <Leader>j :wincmd j<CR>
+map <Leader>k :wincmd k<CR>
+map <Leader>l :wincmd l<CR>
+
+nnoremap <Leader>pd :NERDTreeToggle<Enter>
+nnoremap <LeadeR>gd :GoDef<Enter>
+
 augroup numbertoggle
     autocmd!
     autocmd BufEnter,FocusGained,InsertLeave * set rnu
@@ -109,10 +124,29 @@ function MyDiff()
   endif
 endfunction
 
+" shortcut for grep
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+let g:ctrlp_map = '<c-p>'
+let g:ackprg = 'ag --vimgrep'
+
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" Jump to definition with ctags
+
+" The Silver Searcher (like ack or grep)
+" Plug 'rking/ag.vim'
+Plug 'ggreer/the_silver_searcher'
+
+" Key word finder -- replaces rking/ag.vim -- since deprecated
+Plug 'mileszs/ack.vim'
+
+" File finder
+Plug 'kien/ctrlp.vim'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -131,7 +165,7 @@ Plug 'morhetz/gruvbox'
 
 " Note taking plug-in for vim
 " Plug 'xolox/vim-notes'
-
+"
 " Another note taking plugin: vim Wiki
 Plug 'vimwiki/vimwiki'
 
