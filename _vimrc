@@ -25,7 +25,7 @@ nnoremap <SPACE> <Nop>
 let mapleader="\<Space>"
 
 " Mapping to reload configuration
-nmap <leader>so :source C:\Users\Xavie\_gvimrc<CR>
+nmap <leader>ss :source C:\Users\Xavie\_gvimrc<CR>
 
 " Font and gui options set based on the system detected:
 if has("gui_running")
@@ -46,8 +46,10 @@ if has("gui_running")
   endif
 endif
 
-set pythonthreehome=C:\Python36-32\
-set pythonthreedll=C:\Python36-32\python36.dll
+" set pythonthreehome=C:\Python36-32\
+" set pythonthreedll=C:\Python36-32\python36.dll
+set pythonthreehome=C:\Users\Xavie\AppData\Local\Programs\Python\Python39
+set pythonthreedll=C:\Users\Xavie\AppData\Local\Programs\Python\Python39\python39.dll
 
 map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 map <silent> <F5> :call gruvbox#bg_toggle()<CR>
@@ -82,7 +84,7 @@ map <Leader>k :wincmd k<CR>
 map <Leader>l :wincmd l<CR>
 
 nnoremap <Leader>pd :NERDTreeToggle<Enter>
-nnoremap <LeadeR>gd :GoDef<Enter>
+nnoremap <Leader>gd :GoDef<Enter>
 
 augroup numbertoggle
     autocmd!
@@ -129,24 +131,30 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-let g:ctrlp_map = '<c-p>'
-let g:ackprg = 'ag --vimgrep'
+" File search and vimgrep shortcuts 
+" let g:ctrlp_map = '<c-p>'
+" let g:ackprg = 'ag --vimgrep'
 
-" Specify a directory for plugins
+" md-img-paste.vim 
+autocmd FileType markdown nmap <buffer><silent> <leader>so :call mdip#MarkdownClipboardImage()<CR>
+
+" there are some defaults for image directory and image name, you can change them
+" let g:mdip_imgdir = 'img'
+" let g:mdip_imgname = 'image'
+
+" Specify directory for plugins ----------------------------------------
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-" Jump to definition with ctags
 
 " The Silver Searcher (like ack or grep)
-" Plug 'rking/ag.vim'
 Plug 'ggreer/the_silver_searcher'
 
 " Key word finder -- replaces rking/ag.vim -- since deprecated
 Plug 'mileszs/ack.vim'
 
 " File finder
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -157,21 +165,30 @@ Plug 'junegunn/vim-easy-align'
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
-" Base 16 themes by Chris Kempson
-Plug 'chriskempson/base16-vim'
-
 " Gruvbox vim theme
 Plug 'morhetz/gruvbox'
 
-" Note taking plug-in for vim
-" Plug 'xolox/vim-notes'
-"
 " Another note taking plugin: vim Wiki
 Plug 'vimwiki/vimwiki'
 
 " Powerline plugin
 Plug 'powerline/powerline'
 
+" Markdown preview and typsetting math
+Plug 'iamcco/markdown-preview.vim'
+" Plug 'JamshedVesuna/vim-markdown-preview'
+" Plug 'iamcco/mathjax-support-for-mkdp'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+" Plug 'iamcco/markdown-preview.vim'
+
+" Markdown on vim
+Plug 'plasticboy/vim-markdown'
+
+" Paste clipboard image to markdown
+Plug 'ferrine/md-img-paste.vim'
+
+" Git Integration
+Plug 'tpope/vim-fugitive'
+
 " Initialize plugin system
 call plug#end()
-
